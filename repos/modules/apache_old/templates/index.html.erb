@@ -1,0 +1,17 @@
+<html>
+<head> <title> Puppet testing Apache  </title> </head>
+<body>
+<center>
+<h1>Proyecto: Servidor central con Puppet </h1>
+<p>Host: <%= scope.lookupvar('::hostname') %></p>
+<p>Dominio: <%= scope.lookupvar('::domain') %></p>
+<p>SO: <%= scope.lookupvar('::operatingsystem') %></p>
+<p>Familia SO: <%= scope.lookupvar('::osfamily') %></p>
+<p>Dir. IP: <%= scope.lookupvar('::ipaddress') %></p>
+<p>Netmask: <%= scope.lookupvar('::netmask') %></p>
+<br>
+<p>Tiempo en ejecucion: <%= scope.lookupvar('uptime') %></p>
+<p><%= scope.lookupvar('::swapfree') %> memoria virtual disponible de <%= scope.lookupvar('::swapsize') %></p>
+</center>
+</body>
+</html>

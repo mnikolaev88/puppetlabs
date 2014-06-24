@@ -1,0 +1,47 @@
+myhostname = mail.<%= scope.lookupvar('::domain') %>
+mydomain = <%= scope.lookupvar('::domain') %>
+myorigin = $mydomain
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+mydestination = $mydomain, $myhostname
+relayhost = 
+mynetworks = <%= scope.lookupvar('::network_eth0') %>/<%= scope.lookupvar('::netmask_eth0') %>
+mailbox_size_limit = 1073741824
+message_size_limit = 1073741824
+recipient_delimiter = +
+inet_interfaces = all
+home_mailbox = Maildir/
+
+smtpd_banner = ESMTP Postfix corriendo en $myhostname , <%= scope.lookupvar('::operatingsystem') %> <%= scope.lookupvar('::operatingsystemrelease') %>.
+
+biff = no
+
+append_dot_mydomain = no
+readme_directory = no
+
+smtpd_tls_auth_only = no
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtp_tls_note_starttls_offer = yes
+#smtpd_tls_CAfile = <%= scope.lookupvar('postfix::postfix_keypath') %>/<%= scope.lookupvar('postfix::postfix_key') %>.pem
+smtpd_tls_cert_file = <%= scope.lookupvar('postfix::postfix_keypath') %>/<%= scope.lookupvar('postfix::postfix_key') %>.crt
+smtpd_tls_key_file= <%= scope.lookupvar('postfix::postfix_keypath') %>/<%= scope.lookupvar('postfix::postfix_key') %>.key
+smtpd_tls_loglevel = 4
+debug_peer_list = problem.domain
+smtpd_use_tls=yes
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_session_cache_timeout = 3600s
+
+
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+#smtpd_sasl_local_domain =
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_auth_enable = yes
+smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination
+
+
